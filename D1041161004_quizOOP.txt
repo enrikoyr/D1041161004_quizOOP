@@ -1,0 +1,229 @@
+-----------------------------Modifier-----------------------------
+1. public class MainActivity extends AppCompatActivity {
+2. protected void onCreate(Bundle savedInstanceState) {
+3. public class Activity2 extends AppCompatActivity {
+
+-----------------------------Method-----------------------------
+1. public void launchSecondActivity(View view) {
+                Log.d(LOG_TAG, "Button clicked!");
+                Intent intent = new Intent(this, SecondActivity.class);
+                String message = mMessageEditText.getText().toString();
+                intent.putExtra(EXTRA_MESSAGE, message);
+                startActivityForResult(intent, TEXT_REQUEST);
+            }
+
+2.  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == TEXT_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                String reply = data.getStringExtra(SecondActivity.EXTRA_REPLY);
+                mReplyHeadTextView.setVisibility(View.VISIBLE);
+                mReplyTextView.setText(reply);
+                mReplyTextView.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+3. public void returnReply(View view) {
+        String reply = mReply.getText().toString();
+        Intent replyIntent = new Intent();
+        replyIntent.putExtra(EXTRA_REPLY, reply);
+        setResult(RESULT_OK, replyIntent);
+        finish();
+    }
+
+4.  protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_2);
+        text = findViewById(R.id.welcome);
+        string = getIntent().getExtras().getString("Value");
+        text.setText(string);
+
+        num = findViewById(R.id.num);
+        btninc = findViewById(R.id.btninc);
+        btndec = findViewById(R.id.btndec);
+
+        num.setText("4");
+
+        btninc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nim++;
+                num.setText(String.valueOf(nim));
+            }
+        });
+
+        btndec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nim--;
+                num.setText(String.valueOf(nim));
+            }
+        });
+    }
+
+-----------------------------Class-----------------------------
+1. public class SecondActivity extends AppCompatActivity {
+
+    public static final String EXTRA_REPLY = "com.example.android.twoactivities.extra.REPLY";
+    private EditText mReply;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+        mReply = findViewById(R.id.editText_second);
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        TextView textView = findViewById(R.id.text_message);
+        textView.setText(message);
+    }
+
+    public void returnReply(View view) {
+        String reply = mReply.getText().toString();
+        Intent replyIntent = new Intent();
+        replyIntent.putExtra(EXTRA_REPLY, reply);
+        setResult(RESULT_OK, replyIntent);
+        finish();
+    }
+}
+
+2. public class MainActivity extends AppCompatActivity {
+
+    String string;
+    EditText name;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button button = findViewById(R.id.button);
+        final EditText name = findViewById(R.id.name);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(MainActivity.this,Activity2.class);
+                string=name.getText().toString();
+                i.putExtra("Value",string);
+                startActivity(i);
+                finish();
+            }
+        });
+
+    }
+}
+
+-----------------------------Function-----------------------------
+1.  num = findViewById(R.id.num);
+        btninc = findViewById(R.id.btninc);
+        btndec = findViewById(R.id.btndec);
+
+2.  btninc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nim++;
+                num.setText(String.valueOf(nim));
+            }
+        });
+
+3.  btndec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nim--;
+                num.setText(String.valueOf(nim));
+            }
+        });
+
+-----------------------------Constructor-----------------------------
+1. public class Activity2 extends AppCompatActivity {
+
+    TextView text;
+    String string;
+
+    TextView num;
+    Button btninc;
+    Button btndec;
+    int nim = 4;
+
+2. public class MainActivity extends AppCompatActivity {
+
+    String string;
+    EditText name;
+
+-----------------------------Polimorphism-----------------------------
+1.  @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_2);
+        text = findViewById(R.id.welcome);
+        string = getIntent().getExtras().getString("Value");
+        text.setText(string);
+
+        num = findViewById(R.id.num);
+        btninc = findViewById(R.id.btninc);
+        btndec = findViewById(R.id.btndec);
+
+        num.setText("4");
+
+        btninc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nim++;
+                num.setText(String.valueOf(nim));
+            }
+        });
+
+        btndec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nim--;
+                num.setText(String.valueOf(nim));
+            }
+        });
+
+2.     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_second);
+        mReply = findViewById(R.id.editText_second);
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        TextView textView = findViewById(R.id.text_message);
+        textView.setText(message);
+    }
+
+    public void returnReply(View view) {
+        String reply = mReply.getText().toString();
+        Intent replyIntent = new Intent();
+        replyIntent.putExtra(EXTRA_REPLY, reply);
+        setResult(RESULT_OK, replyIntent);
+        finish();
+    }
+}
+
+3.     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == TEXT_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                String reply = data.getStringExtra(SecondActivity.EXTRA_REPLY);
+                mReplyHeadTextView.setVisibility(View.VISIBLE);
+                mReplyTextView.setText(reply);
+                mReplyTextView.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
+-----------------------------Inheritance-----------------------------
+1.  super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == TEXT_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                String reply = data.getStringExtra(SecondActivity.EXTRA_REPLY);
+                mReplyHeadTextView.setVisibility(View.VISIBLE);
+                mReplyTextView.setText(reply);
+                mReplyTextView.setVisibility(View.VISIBLE);
+
+2. public class MainActivity extends AppCompatActivity {
+
+3. public class Activity2 extends AppCompatActivity {
